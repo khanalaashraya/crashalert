@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrashAlert</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="logo.png" alt="CrashAlert logo">
+    <p class="tag mono">vehicular accident detection &amp; response</p>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h2>Detect the moment it happens.</h2>
+    <p>Upload a camera frame to run it through the CrashAlert detection pipeline.</p>
+    <div class="rule"></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Input panel -->
+    <div class="panel">
+      <h3>Camera Feed</h3>
+      <p class="sub">Select a source camera and upload a frame.</p>
+
+      <div class="preview" id="previewArea">
+        <div class="placeholder">No frame selected</div>
+        <img id="imagePreview" alt="Selected camera frame">
+      </div>
+
+      <label class="field-label" for="cameraSelect">Camera</label>
+      <select id="cameraSelect">
+        <option value="CAM-01">CAM-01 — KIIT Main Gate</option>
+        <option value="CAM-02">CAM-02 — Campus Road</option>
+        <option value="CAM-03">CAM-03 — Hostel Road</option>
+      </select>
+
+      <div class="row">
+        <label class="btn upload" for="imageInput">Choose Image</label>
+        <input id="imageInput" type="file" accept="image/*">
+        <button id="analyzeBtn" class="btn analyze" disabled>Analyze Frame</button>
+      </div>
+
+      <p class="file-name" id="fileName">No image selected</p>
+    </div>
+
+    <!-- Result panel -->
+    <div class="panel readout" id="readoutPanel">
+      <h3>Response Readout</h3>
+      <p class="sub">Latest CrashAlert analysis</p>
+
+      <div class="result-main">
+        <div class="result-icon" id="resultIcon">—</div>
+        <div>
+          <h3 id="accidentStatus">Waiting for analysis</h3>
+          <p id="accidentDetail">Upload an image and click Analyze Frame.</p>
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <span>accident confidence</span>
+          <strong id="accidentConf">—</strong>
+        </div>
+        <div class="metric">
+          <span>severity</span>
+          <strong id="severityValue">—</strong>
+        </div>
+        <div class="metric">
+          <span>severity confidence</span>
+          <strong id="severityConf">—</strong>
+        </div>
+        <div class="metric">
+          <span>location</span>
+          <strong id="locationValue" style="font-size:14px;">—</strong>
+        </div>
+      </div>
+
+      <div class="alert-box" id="alertBox">
+        <div>
+          <strong id="alertStatus">No alert</strong>
+          <p id="alertDescription">No accident has been detected.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
