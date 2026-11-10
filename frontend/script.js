@@ -65,10 +65,16 @@ function showResult(data) {
     severityConf.textContent = formatPct(data.severity_confidence);
 
     alertBox.className = "alert-box danger";
-    alertStatus.textContent = data.alert_generated ? "Simulated Alert Generated" : "Alert Not Generated";
-    alertDescription.textContent = data.alert_generated
-      ? `Emergency response triggered for ${location}.`
-      : "The system did not generate an alert.";
+    alertStatus.textContent = data.call_placed
+      ? "Phone Call Started"
+      : data.alert_generated
+        ? "Alert Generated"
+        : "Alert Not Generated";
+    alertDescription.textContent = data.call_placed
+      ? `DialF started a call to the configured contact for ${location}.`
+      : data.alert_generated
+        ? `A notification was generated for ${location}. ${data.call_reason || "Voice calls may be disabled or not configured."}`
+        : "The system did not generate an alert.";
 
     readoutPanel.classList.add("state-danger");
   } else {

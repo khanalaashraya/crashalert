@@ -14,6 +14,7 @@ from ultralytics import YOLO
 from location.camera_locations import get_location_name, get_coordinates, camera_exists
 from alerts.alerts_module import generate_alert
 from alerts.email_alert import send_alert_email
+from alerts.phone_alert import send_alert_call
 
 MODEL_DIR = PROJECT_ROOT / "model"
 ACCIDENT_MODEL_PATH = MODEL_DIR / "crashalert_accident_v2_model.pt"
@@ -65,6 +66,7 @@ async def analyze(file: UploadFile = File(...), camera_id: str = Form(...)):
     alert = generate_alert(is_accident, severity_class, location, camera_id, coordinates)
 
     email_result = {}
+    call_result = {}
     if alert.get("alert_generated"):
         email_result = send_alert_email(
             camera_id=camera_id,
@@ -72,6 +74,7 @@ async def analyze(file: UploadFile = File(...), camera_id: str = Form(...)):
             severity=severity_class,
             maps_url=alert.get("maps_url"),
         )
+        call_result = send_alert_call()
 
     return {
         "camera_id": camera_id,
@@ -83,4 +86,5 @@ async def analyze(file: UploadFile = File(...), camera_id: str = Form(...)):
         "severity_confidence": severity_confidence,
         **alert,
         **email_result,
+        **call_result,
     }
